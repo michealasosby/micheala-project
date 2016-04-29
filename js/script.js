@@ -46,24 +46,23 @@ var ourZipsArray = [];
 $(document).ready(function(d) {
 
   d3.csv("data/missouri-guns.csv", function(data) {
-
     for (i=0; i<data.length; i++) {
-      if (!allZipCodes[data[i].zipcode]) {
-        allZipCodes[data[i].zipcode] = 0;
-        allZipCodes[data[i].zipcode] +=1;
+        if (!allZipCodes[data[i].zipcode]) {
+          allZipCodes[data[i].zipcode] = 0;
+          allZipCodes[data[i].zipcode] +=1;
+        }
       }
-    }
 
-      $.each(allZipCodes, function(zip, licenses) {
-        var zip = String(zip);
-        var zip = zip.substring(0,5);
-        var licenses = licenses;
+      $.each(allZipCodes, function(zipcode, licenses) {
+        var zipcode = String(zipcode);
+        var zipcode = zipcode.substring(0,5);
         var obj = {
-          zip : zip,
+          zipcode : zipcode,
           licenses : licenses
         }
 
-        theData[zip] = obj;
+        theData[zipcode] = obj;
+        theData[licenses] = obj;
 
         ourZipsArray.push(obj);
         console.log(ourZipsArray);
@@ -90,6 +89,8 @@ function drawMap() {
       .attr("class", "zipcode");
 
 console.log(feature);
+
+
 
   })
 }
