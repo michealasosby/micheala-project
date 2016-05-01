@@ -82,7 +82,7 @@ function drawMap() {
 
 
                   var zips = d.properties.zcta5ce10;
-
+                  console.log(zips);
                   var gunLicenses;
 
                   if (theData[zips]) {
@@ -91,7 +91,7 @@ function drawMap() {
                     gunLicenses = 0;
                   }
 
-                  console.log(gunLicenses);
+                  console.log(d.properties);
 
 
                   if (gunLicenses == 0) {
