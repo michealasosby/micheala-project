@@ -38,47 +38,23 @@ d3.selection.prototype.moveToBack = function() {
             this.parentNode.insertBefore(this, firstChild);
         }
     });
-};
-
-var allZipCodes = {};
-var ourZipsArray = [];
+}
 
 $(document).ready(function(d) {
 
-    d3.csv("data/missouri-guns.csv", function(data) {
-        for (i = 0; i < data.length; i++) {
-            if (!allZipCodes[data[i].zipcode]) {
-                allZipCodes[data[i].zipcode] = 0;
-                allZipCodes[data[i].zipcode] += 1;
-            }
-        }
-
-        $.each(allZipCodes, function(zipcode, licenses) {
-            var zipcode = String(zipcode);
-            var zipcode = zipcode.substring(0, 5);
-            var obj = {
-                zipcode: zipcode,
-                licenses: licenses
-            }
-
-            theData[zipcode] = obj;
-            theData[licenses] = obj;
-
-            ourZipsArray.push(obj);
-            // console.log(ourZipsArray);
-
-
-        });
-
-        drawMap();
-
+  d3.csv("data/missouri-guns.csv", function(data) {
+    $.each(data, function(i, item) {
+      var licenses = item["licenses"];
+      var zips = item["zipcode"];
+      theData[zips] = item;
+      theData[licenses] = item;
     })
+console.log(theData);
+    drawMap();
 
+  })
 
-
-
-})
-
+});
 
 function drawMap() {
 
@@ -90,33 +66,47 @@ function drawMap() {
             }),
             path = d3.geo.path().projection(transform);
 
-        var feature = g.selectAll("path")
-            .data(collection.features)
-            .enter()
-            .append("path")
-            .attr("class", "zipcode")
-            .attr("fill", function(d) {
+            var feature = g.selectAll("path")
+                .data(collection.features)
+                .enter()
+                .append("path")
+                .attr("class", "zipcode")
+                .attr("fill", function(d) {
 
-              /* This is where you'll use the dictionary object (theData)
-              to look up your values by zip code and color them accordinly. */
+                  /* This is where you'll use the dictionary object (theData)
+                  to look up your values by zip code and color them accordinly. */
 
-              // See the lines linked here for an example:
-              /* https://github.com/chriscanipe/missouri-map/blob/master/js/script.js#L117-L134 */
+                  // See the lines linked here for an example:
+                  /* https://github.com/chriscanipe/missouri-map/blob/master/js/script.js#L117-L134 */
 
-              return "#CCCCCC";
-            })
+                  var zips = d.properties.geoid10;
+                  var gunLicenses = theData[zips]['licenses'];
+
+                  gunLicenses = Number(gunLicenses);
+
+                  if (gunLicenses == 0) {
+                    return "ffffb2";
+                  } else if (gunLicenses > 0 && gunLicenses <= 10) {
+                    return "fecc5c";
+                  } else if (gunLicenses > 10 && gunLicenses <= 20) {
+                    return "fd8d3c";
+                  } else if (gunLicenses > 20) {
+                    return "e31a1c";
+                  }
+                })
+                console.log(gunLicenses)
 
         map.on("viewreset", function() {
             reset();
         });
 
 
-        
+
 
 
 
         // We need a reset() function to redraw and reposition our zip codes
-        // whenever the map tile moves. We call it on load as well. 
+        // whenever the map tile moves. We call it on load as well.
         // Notice the reset() function includes the attr "d" definition
         // That's where the paths are actually drawn.
         function reset() {
