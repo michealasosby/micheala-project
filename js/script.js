@@ -79,22 +79,32 @@ function drawMap() {
                   // See the lines linked here for an example:
                   /* https://github.com/chriscanipe/missouri-map/blob/master/js/script.js#L117-L134 */
 
-                  var zips = d.properties.geoid10;
-                  var gunLicenses = theData[zips]['licenses'];
 
-                  gunLicenses = Number(gunLicenses);
+
+                  var zips = d.properties.zcta5ce10;
+
+                  var gunLicenses;
+
+                  if (theData[zips]) {
+                    gunLicenses = +theData[zips].licenses;
+                  } else {
+                    gunLicenses = 0;
+                  }
+
+                  console.log(gunLicenses);
+
 
                   if (gunLicenses == 0) {
-                    return "ffffb2";
+                    return "#ffffb2";
                   } else if (gunLicenses > 0 && gunLicenses <= 10) {
-                    return "fecc5c";
+                    return "#fecc5c";
                   } else if (gunLicenses > 10 && gunLicenses <= 20) {
-                    return "fd8d3c";
+                    return "#fd8d3c";
                   } else if (gunLicenses > 20) {
-                    return "e31a1c";
+                    return "#e31a1c";
                   }
                 })
-                console.log(gunLicenses)
+                
 
         map.on("viewreset", function() {
             reset();
