@@ -43,11 +43,13 @@ d3.selection.prototype.moveToBack = function() {
 $(document).ready(function(d) {
 
   d3.csv("data/missouri-guns.csv", function(data) {
+
     $.each(data, function(i, item) {
-      var licenses = item["licenses"];
+
       var zips = item["zipcode"];
       theData[zips] = item;
-      theData[licenses] = item;
+      var licenses = ["licenses"];
+
     })
 console.log(theData);
     drawMap();
@@ -79,6 +81,10 @@ function drawMap() {
                   // See the lines linked here for an example:
                   /* https://github.com/chriscanipe/missouri-map/blob/master/js/script.js#L117-L134 */
 
+/// Updated upstream
+
+
+//Stashed changes
 
 
                   var zips = d.properties.zcta5ce10;
@@ -104,7 +110,46 @@ function drawMap() {
                     return "#e31a1c";
                   }
                 })
-                
+
+        .on("mouseover", function(d) {
+
+          var zips = d.properties.zcta5ce10;
+          var gunLicenses;
+
+          if (theData[zips]) {
+            gunLicenses = theData[zips].licenses;
+          } else {
+            gunLicenses = 0;
+          }
+
+          d3.select(this).style("stroke", "#333").moveToFront();
+
+          var pageX = d3.event.pageX;
+          var pageY = d3.event.pageY;
+
+          var chartLeft = $(".chart").position().left;
+          var chartTop = $(".chart").position().top;
+
+          var tt_x = pageX - chartLeft + 15;
+          var tt_y = pageY - chartTop + 15;
+
+          $(".tt").html(
+            "<div class='zipcode'><h6><strong>ZIP code:&nbsp</strong></h6><h5></div>"+zips+"</h5>"+
+            "<br><div class='val'><h6><strong>Federal firearms licenses:&nbsp</strong></h6><h5></div>"+gunLicenses+"</h5>"
+          ).show();
+
+          $(".tt").css({
+            "left" : tt_x+"px",
+            "top" : tt_y+"px"
+          });
+
+        })
+
+        .on("mouseout", function() {
+          d3.select(this).style("stroke", "#FFF").moveToBack();
+
+          $(".tt").hide();
+        })
 
         map.on("viewreset", function() {
             reset();

@@ -9,6 +9,7 @@
 .zipcode {
   stroke-width: 1;
   stroke: #FFF;
+  display: inline-block;
 }
 
 .tt {
@@ -30,6 +31,7 @@
 
 .tt .val {
   font-size: 18px;
+  display: inline-block;
 }
 
 .key {
@@ -58,6 +60,8 @@
   top: -15px;
   right: -15px;
   font-size: 11px;
+
+
 }
 
 .v0-10 .swatch {
