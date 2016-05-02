@@ -64,18 +64,18 @@
 
 }
 
-.v0-10 .swatch {
-  background-color: #ffffb2;
+.v0-0 .swatch {
+  background-color: #FEFFE7;
 }
 
-.v10-20 .swatch {
+.v0-10 .swatch {
   background-color: #fecc5c;
 }
 
-.v20-30 .swatch {
+.v10-20 .swatch {
   background-color: #fd8d3c;
 }
 
-.v30 .swatch {
+.v20 .swatch {
   background-color: #e31a1c;
 }

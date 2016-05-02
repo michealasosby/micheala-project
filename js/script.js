@@ -101,7 +101,7 @@ function drawMap() {
 
 
                   if (gunLicenses == 0) {
-                    return "#ffffb2";
+                    return "#FEFFE7";
                   } else if (gunLicenses > 0 && gunLicenses <= 10) {
                     return "#fecc5c";
                   } else if (gunLicenses > 10 && gunLicenses <= 20) {
