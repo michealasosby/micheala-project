@@ -5,15 +5,22 @@ var center = [38.6321346, -92.4013551]
 //Set the center point and zoom level.
 var map = L.map('chart').setView(center, 7);
 
+
+
 // add an OpenStreetMap tile layer
 //OpenStreetMap is an open source map layers anyone can use free of charge.
 L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+
+
 }).addTo(map);
+
+
 
 // //Add an svg element to the map.
 var svg = d3.select(map.getPanes().overlayPane).append("svg"),
     g = svg.append("g").attr("class", "leaflet-zoom-hide");
+
 
 //This will be a dictionary object we use to lookup the info for each county.
 //It's empty for now. We add our data when we load or json.
@@ -40,6 +47,8 @@ d3.selection.prototype.moveToBack = function() {
     });
 }
 
+
+
 $(document).ready(function(d) {
 
   d3.csv("data/missouri-guns.csv", function(data) {
@@ -60,6 +69,8 @@ console.log(theData);
 
 function drawMap() {
 
+
+
     d3.json("js/missouri-zips.json", function(collection) {
 
 
@@ -75,6 +86,8 @@ function drawMap() {
                 .attr("class", "zipcode")
                 .attr("fill", function(d) {
 
+
+
                   /* This is where you'll use the dictionary object (theData)
                   to look up your values by zip code and color them accordinly. */
 
@@ -85,10 +98,11 @@ function drawMap() {
 
 
 //Stashed changes
-
+d3.select('svg').style('opacity', 0.7)
 
                   var zips = d.properties.zcta5ce10;
                   console.log(zips);
+
                   var gunLicenses;
 
                   if (theData[zips]) {
@@ -109,6 +123,9 @@ function drawMap() {
                   } else if (gunLicenses > 20) {
                     return "#e31a1c";
                   }
+
+
+
                 })
 
         .on("mouseover", function(d) {
@@ -134,8 +151,9 @@ function drawMap() {
           var tt_y = pageY - chartTop + 15;
 
           $(".tt").html(
-            "<div class='zipcode'><h6><strong>ZIP code:&nbsp</strong></h6><h5></div>"+zips+"</h5>"+
-            "<br><div class='val'><h6><strong>Federal firearms licenses:&nbsp</strong></h6><h5></div>"+gunLicenses+"</h5>"
+            "<div class='title'><h8>Federal firearms licenses per ZIP code</h8></div>"+
+            "<div class='zipcode'></div>"+zips+
+            "&nbsp;&nbsp;<div class='val'><h6><strong>licenses:&nbsp</strong></h6><h5></div>"+gunLicenses+"</h5>"
           ).show();
 
           $(".tt").css({

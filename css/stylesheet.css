@@ -6,6 +6,11 @@
   height: 500px;
 }
 
+.title {
+  font-weight: bold;
+}
+
+
 .zipcode {
   stroke-width: 1;
   stroke: #FFF;
@@ -43,7 +48,7 @@
 
 .key .key-item {
   top: 15px;
-  width: 30px;
+  width: 40px;
   float: left;
   position: relative;
   margin: 0;
@@ -58,24 +63,35 @@
 .key .val {
   position: absolute;
   top: -15px;
-  right: -15px;
-  font-size: 11px;
+  right: -5px;
+  font-size: 11px;}
+
+.key .zero {
+    position: absolute;
+    top: -15px;
+    right: 20px;
+    font-size: 11px;
+
 
 
 }
 
-.v0-0 .swatch {
+.v0 .swatch {
   background-color: #FEFFE7;
+  opacity: 0.7;
 }
 
 .v0-10 .swatch {
   background-color: #fecc5c;
+  opacity: 0.7;
 }
 
 .v10-20 .swatch {
   background-color: #fd8d3c;
+  opacity: 0.7;
 }
 
 .v20 .swatch {
   background-color: #e31a1c;
+  opacity: 0.7;
 }
